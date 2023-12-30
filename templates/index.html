@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>CamLoop-Web</title>
+</head>
+<body>
+    <script>
+        setInterval(function() {
+            fetch('/status')
+                .then(response => response.text())
+                .then(status => {
+                    document.getElementById('status').textContent = 'Volany preset: ' + status;
+                });
+        }, 2000);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <form method="POST">
+        <button name="start">Zapni CamLoop</button>
+        <button name="stop">Vypni CamLoop</button>
+    </form>
+    <h1>CamLoop prave: {{ 'bezi' if script_running else 'nebezi' }}</h1>
+    <h1 id="status">Volany preset: ziadny</h1>
+    <img src="{{ url_for('video_feed') }}" style="width: 70%"/>
+</body>
+</html>
