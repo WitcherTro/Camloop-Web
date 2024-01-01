@@ -12,12 +12,74 @@
                 });
         }, 2000);
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('add').addEventListener('click', function() {
+                // Create a new input group
+                var newInputGroup = document.createElement('div');
+                newInputGroup.className = 'input-group';
+                // Create a new preset input
+                var newPresetInput = document.createElement('input');
+                newPresetInput.type = 'text';
+                newPresetInput.name = 'preset' + (document.getElementsByClassName('input-group').length + 1);
+                newPresetInput.placeholder = 'Preset ' + (document.getElementsByClassName('input-group').length + 1);
+                // Create a new sleep time input
+                var newSleepTimeInput = document.createElement('input');
+                newSleepTimeInput.type = 'text';
+                newSleepTimeInput.name = 'sleep_time' + (document.getElementsByClassName('input-group').length + 1);
+                newSleepTimeInput.placeholder = 'Sleep Time ' + (document.getElementsByClassName('input-group').length + 1);
+                // Add the new input fields to the form
+                newInputGroup.appendChild(newPresetInput);
+                newInputGroup.appendChild(newSleepTimeInput);
+                document.getElementById('inputs').appendChild(newInputGroup);
+            });
+        
+            document.getElementById('remove').addEventListener('click', function() {
+                var inputGroups = document.getElementsByClassName('input-group');
+                if (inputGroups.length > 0) {
+                    // Remove the last input group
+                    inputGroups[inputGroups.length - 1].remove();
+
+                    // Send a POST request to the server to delete the last preset
+                    fetch('/delete_last', { method: 'POST' });
+    }
+});
+        });
+        </script>
 
     <form method="POST">
         <button name="start">Zapni CamLoop</button>
         <button name="stop">Vypni CamLoop</button>
     </form>
+
+    <form method="POST" id="form">
+        <table>
+            <thead>
+                <tr>
+                    <th>Preset</th>
+                    <th>Doba trvania (s)</th>
+                </tr>
+            </thead>
+            <tbody id="inputs">
+                <!-- Initial preset and sleep time inputs -->
+                {% for preset in presets %}
+                <tr class="input-group">
+                    <td>
+                        <input type="text" name="preset{{ loop.index }}" value="{{ preset }}" placeholder="Preset {{ loop.index }}">
+                    </td>
+                    <td>
+                        <input type="text" name="sleep_time{{ loop.index }}" value="{{ sleep_times[loop.index0] }}" placeholder="Sleep Time {{ loop.index }}">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="button" id="add">Pridaj dalsi riadok</button>
+        <button id="remove">Vymaz posledny riadok</button>
+        <input type="submit" name="save" value="Uloz">
+        <input type="submit" name="load" value="Nacitaj">
+    </form>
+
     <h1>CamLoop prave: {{ 'bezi' if script_running else 'nebezi' }}</h1>
     <h1 id="status">Volany preset: ziadny</h1>
     <img src="{{ url_for('video_feed') }}" style="width: 70%"/>
