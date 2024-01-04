@@ -5,32 +5,24 @@ import sys
 import cv2
 import threading
 
+from preset import Preset
+from camera import Camera
+
 app = Flask(__name__)
 process = None
 script_running = False
 rtsp_url = 'rtsp://meno:heslo@192.168.2.143:554/11'
 latest_frame = None
 
-cap = cv2.VideoCapture(rtsp_url)
-
-def capture_frames():
-    global latest_frame
-    while True:
-        success, frame = cap.read()
-        if not success:
-            break
-        else:
-            ret, buffer = cv2.imencode('.jpg', frame)
-            latest_frame = buffer.tobytes()
-
-capture_thread = threading.Thread(target=capture_frames)
-capture_thread.start()
+camera = Camera(rtsp_url)
+preset = Preset('preset.txt')
 
 def gen_frames():
     while True:
-        if latest_frame is not None:
+        frame = camera.get_latest_frame()
+        if frame is not None:
             yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + latest_frame + b'\r\n')
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
 
@@ -96,18 +88,8 @@ def video_feed():
 
 @app.route('/delete_last', methods=['POST'])
 def delete_last():
-    with open('preset.txt', 'r') as f:
-        lines = f.read().splitlines()
-
-    # Check if there are at least two lines to delete (a preset and a sleep time)
-    if len(lines) >= 2:
-        # Delete the last two lines (the last preset and sleep time)
-        lines = lines[:-2]
-
-        with open('preset.txt', 'w') as f:
-            for line in lines:
-                f.write(f'{line}\n')
-
+    preset = Preset('preset.txt')
+    preset.delete_last()
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
