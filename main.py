@@ -34,7 +34,7 @@ def gen_frames():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     global process, script_running
-    status = 'None'
+    status = 'Ziadny'
     presets = ['']
     sleep_times = ['']
 
@@ -97,7 +97,7 @@ def index():
 @app.route('/status', methods=['GET'])
 def status():
     # Define a route for getting the current status, if script is not running write 'None'
-    status = 'None'
+    status = 'Ziadny'
     if script_running:
         # If a script is running, read the status from the 'status.txt' file
         with open('status.txt', 'r') as f:

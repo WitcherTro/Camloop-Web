@@ -24,7 +24,7 @@
                     <thead>
                         <tr>
                             <th>Preset</th>
-                            <th>Time sleep (s)</th>
+                            <th>Doba trvania (s)</th>
                         </tr>
                     </thead>
                     <!-- Create the body of the table -->
@@ -45,16 +45,16 @@
                 </tbody>
             </table>
             <!-- Create buttons for adding and removing rows, and for saving and loading the presets and sleep times -->
-                <button type="button" id="add">Add new row</button>
-                <button type="button" id="remove">Remove last row</button>
-                <input type="submit" name="save" value="Save">
-                <input type="submit" name="load" value="Load">
+                <button type="button" id="add">Pridaj ďalší riadok</button>
+                <button type="button" id="remove">Vymaž posledný riadok</button>
+                <input type="submit" name="save" value="Ulož">
+                <input type="submit" name="load" value="Načítaj">
             </form>
             
             <!-- Display whether the script is running or not -->
-            <h3>CamLoop is now: {{ 'running' if script_running else 'not running' }}</h3>
+            <h3>CamLoop teraz: {{ 'beží' if script_running else 'nebeží' }}</h3>
              <!-- Display the currently called preset -->
-            <h3 id="status">Called preset: None</h3>
+            <h3 id="status">Volaný preset: Žiadný</h3>
         </div>
 
         <!-- Create a right panel for the video feed -->

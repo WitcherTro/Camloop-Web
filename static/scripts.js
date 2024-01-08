@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             .then(response => response.text())
             .then(status => {
                 // Update the text content of the element with the id 'status'.
-                document.getElementById('status').textContent = 'Called preset: ' + status;
+                document.getElementById('status').textContent = 'Volaný preset: ' + status;
             });
     }, 2000);
 
