@@ -94,6 +94,17 @@ img {
     }
 }
 
+@media (min-width: 1680px) {
+    #left-panel {
+        width: 20%;
+        transform: scale(1.25);
+    }
+
+    #right-panel {
+        width: 80%;
+    }
+}
+
 table {
     margin: 0 auto;
 }

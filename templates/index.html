@@ -1,51 +1,68 @@
 <html>
 <head>
+    <!-- Set the title of the webpage -->
     <title>CamLoop-Web</title>
+    <!-- Link the CSS stylesheet -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <!-- Create a container for the entire content of the webpage -->
     <div id="container">
+        <!-- Create a left panel for the controls -->
         <div id="left-panel">
+             <!-- Create a form for the start and stop buttons -->
             <form method="POST">
-                <button name="start">Zapni CamLoop</button>
-                <button name="stop">Vypni CamLoop</button>
+                <button name="start">Start CamLoop</button>
+                <button name="stop">Stop CamLoop</button>
             </form>
-
+            
+            <!-- Create a form for the presets and sleep times -->
             <form method="POST" id="form">
+                <!-- Create a table for the presets and sleep times -->
                 <table>
+                    <!-- Create the header row of the table -->
                     <thead>
                         <tr>
                             <th>Preset</th>
                             <th>Doba trvania (s)</th>
                         </tr>
                     </thead>
+                    <!-- Create the body of the table -->
                 <tbody id="inputs">
-                    <!-- Initial preset and sleep time inputs -->
+                    <!-- Create a row for each preset and sleep time -->
                     {% for preset in presets %}
                     <tr class="input-group">
                         <td>
+                            <!-- Create an input field for the preset -->
                             <input type="text" name="preset{{ loop.index }}" value="{{ preset }}" placeholder="Preset {{ loop.index }}">
                         </td>
                         <td>
+                            <!-- Create an input field for the sleep time -->
                             <input type="text" name="sleep_time{{ loop.index }}" value="{{ sleep_times[loop.index0] }}" placeholder="Sleep Time {{ loop.index }}">
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            <!-- Create buttons for adding and removing rows, and for saving and loading the presets and sleep times -->
                 <button type="button" id="add">Pridaj dalsi riadok</button>
                 <button type="button" id="remove">Vymaz posledny riadok</button>
                 <input type="submit" name="save" value="Uloz">
                 <input type="submit" name="load" value="Nacitaj">
             </form>
-
+            
+            <!-- Display whether the script is running or not -->
             <h3>CamLoop prave: {{ 'bezi' if script_running else 'nebezi' }}</h3>
+             <!-- Display the currently called preset -->
             <h3 id="status">Volany preset: ziadny</h3>
         </div>
 
+        <!-- Create a right panel for the video feed -->
         <div id="right-panel">
+            <!-- Display the video feed -->
             <img src="{{ url_for('video_feed') }}"/>
         </div>
+        <!-- Link the JavaScript script -->
         <script src="{{ url_for('static', filename='scripts.js') }}"></script>
     </div>
 </body>
