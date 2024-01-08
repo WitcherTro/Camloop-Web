@@ -54,10 +54,11 @@ to run the application, simply start main.py in terminal
 (cd to cloned repo)
 $ python main.py
 ```
-## Using application
-to connect to your application, inside your browser type localhost or 127.0.0.1 (by default port is set to 80), 
+## Connecting to application
+To connect to your application, inside your browser type localhost or 127.0.0.1 (by default port is set to 80),  
 if you set custom port you may need to specify port too as ip:port 
 
+## Using application
 after connecting you should see control panel on the left and camera stream on the right
 
 Control panel has these functions:  
@@ -68,7 +69,6 @@ Starts the camera loop with specified presets and time sleeps
 
   
 **Stop CamLoop**  
-Stops the camera loop
 
 
 **Preset and time sleep table**  
@@ -80,9 +80,9 @@ Stops the camera loop
 
 **Table buttons**  
 
-**-Add new row**  
-**Remove last row**  
-**Save**  
-**Load**  
+- **Add new row**  
+- **Remove last row**  
+- **Save**  
+- **Load**  
 
 **Text indicator if CamLoop is running and on what preset it currently is**
