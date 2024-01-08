@@ -2,7 +2,7 @@
 import requests, time
 
 # Define the base URL for the camera and the request string
-CAMURL = 'http://meno:heslo@192.168.2.143'
+CAMURL = 'http://user:password@camera_ip_address'
 REQUEST = '/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-status=1&-number='
 CAMREQ = CAMURL + REQUEST
 

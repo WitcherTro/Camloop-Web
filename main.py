@@ -14,7 +14,7 @@ app = Flask(__name__)
 # Initialize global variables
 process = None
 script_running = False
-rtsp_url = 'rtsp://192.168.2.143:554/11'
+rtsp_url = 'your_rtsp_stream_url'
 latest_frame = None
 
 # Initialize Camera and Preset modules
@@ -34,7 +34,7 @@ def gen_frames():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     global process, script_running
-    status = 'ziadny'
+    status = 'None'
     presets = ['']
     sleep_times = ['']
 
@@ -96,8 +96,8 @@ def index():
 
 @app.route('/status', methods=['GET'])
 def status():
-    # Define a route for getting the current status, if script is not running write 'ziadny'
-    status = 'ziadny'
+    # Define a route for getting the current status, if script is not running write 'None'
+    status = 'None'
     if script_running:
         # If a script is running, read the status from the 'status.txt' file
         with open('status.txt', 'r') as f:
